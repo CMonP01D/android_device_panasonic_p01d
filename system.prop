@@ -1,0 +1,10 @@
+#
+# system.prop for p01d
+#
+ro.secure=0
+persist.service.adb.enable=1
+rild.libpath=/system/lib/libril-qc-qmi-1.so
+rild.libargs=-d /dev/smd0
+ro.telephony.ril_class=QualcommSharedRIL
+ro.sf.lcd_density=200
+ro.config.libemoji=libemoji_docomo.so
