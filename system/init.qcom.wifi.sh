@@ -36,6 +36,9 @@
 # This script will get called after post bootup.
 target=`getprop ro.product.device`
 wifishd=`getprop wlan.driver.status`
+
+echo 1 > /sys/devices/platform/msm_sdcc.3/polling
+
 case "$target" in
     msm8660*)
     exit 0
