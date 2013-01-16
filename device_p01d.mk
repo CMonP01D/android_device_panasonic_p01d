@@ -14,7 +14,6 @@ PRODUCT_COPY_FILES += \
         device/panasonic/p01d/root/ueventd.qcom.rc:root/ueventd.qcom.rc \
 
 PRODUCT_COPY_FILES += \
-        device/panasonic/p01d/system/init.network_security.sh:system/etc/init.network_security.sh \
         device/panasonic/p01d/system/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc \
         device/panasonic/p01d/system/init.qcom.coex.sh:system/etc/init.qcom.coex.sh \
         device/panasonic/p01d/system/init.qcom.fm.sh:system/etc/init.qcom.fm.sh \

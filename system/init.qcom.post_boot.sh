@@ -33,7 +33,6 @@ case "$target" in
         echo "ondemand" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
         echo 90 > /sys/devices/system/cpu/cpu0/cpufreq/ondemand/up_threshold
         chown system /sys/devices/system/cpu/cpu0/cpufreq/ondemand/sampling_rate
-        sh /etc/init.network_security.sh
         ;;
 esac
 
