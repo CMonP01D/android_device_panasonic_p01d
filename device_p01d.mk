@@ -40,6 +40,9 @@ PRODUCT_COPY_FILES += \
         frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml
 
 PRODUCT_PACKAGES += \
+        com.android.future.usb.accessory
+
+PRODUCT_PACKAGES += \
         copybit.msm7x30 \
         gralloc.msm7x30 \
         hwcomposer.msm7x30 \
