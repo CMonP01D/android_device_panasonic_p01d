@@ -15,7 +15,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
         device/panasonic/p01d/system/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc \
-        device/panasonic/p01d/system/init.qcom.fm.sh:system/etc/init.qcom.fm.sh \
         device/panasonic/p01d/system/init.qcom.post_boot.sh:system/etc/init.qcom.post_boot.sh \
         device/panasonic/p01d/system/init.qcom.sdio.sh:system/etc/init.qcom.sdio.sh \
         device/panasonic/p01d/system/init.qcom.wifi.sh:system/etc/init.qcom.wifi.sh \
