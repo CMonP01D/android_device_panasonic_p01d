@@ -235,9 +235,18 @@ service bluetoothcit /system/bin/sh /system/etc/init.qcom.btcit.sh
     disabled
     oneshot
 
-service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
+service format_bdaddr /system/bin/format_bdaddr
+    class core
+    user root
+    group bluetooth net_bt_admin
+    oneshot
+
+service hciattach /system/bin/brcm_patchram_plus              \
+  --enable_hci --no2bytes --enable_lpm --tosleep 50000        \
+  --baudrate 3000000 --patchram /etc/BCM4330.hcd /dev/ttyHS0
+    class main
     user bluetooth
-    group qcom_oncrpc bluetooth net_bt_admin
+    group bluetooth net_bt_admin
     disabled
     oneshot
 

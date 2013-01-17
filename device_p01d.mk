@@ -38,6 +38,9 @@ PRODUCT_COPY_FILES += \
         frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml
 
 PRODUCT_PACKAGES += \
+        format_bdaddr
+
+PRODUCT_PACKAGES += \
         com.android.future.usb.accessory
 
 PRODUCT_PACKAGES += \
