@@ -17,7 +17,6 @@ PRODUCT_COPY_FILES += \
         device/panasonic/p01d/system/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc \
         device/panasonic/p01d/system/init.qcom.post_boot.sh:system/etc/init.qcom.post_boot.sh \
         device/panasonic/p01d/system/init.qcom.sdio.sh:system/etc/init.qcom.sdio.sh \
-        device/panasonic/p01d/system/init.qcom.bt.sh:system/etc/init.qcom.bt.sh \
         device/panasonic/p01d/system/init.qcom.wifi.sh:system/etc/init.qcom.wifi.sh \
         device/panasonic/p01d/system/surf_keypad.kl:system/usr/keylayout/surf_keypad.kl \
         device/panasonic/p01d/vold.fstab:system/etc/vold.fstab
