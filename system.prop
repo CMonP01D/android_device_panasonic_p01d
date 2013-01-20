@@ -9,3 +9,4 @@ ro.telephony.ril_class=PanasonicQualcommRIL
 ro.sf.lcd_density=200
 ro.config.libemoji=libemoji_docomo.so
 ro.telephony.ril.v3=datacall,singlepdp
+ro.bt.bdaddr_path=/data/simcom/btadd/bt_add.file

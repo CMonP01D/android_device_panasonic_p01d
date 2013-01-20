@@ -223,12 +223,6 @@ service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p10 /dev/block/mmc
 on property:ro.emmc=1
     start rmt_storage
 
-service format_bdaddr /system/bin/format_bdaddr
-    class core
-    user root
-    group bluetooth net_bt_admin
-    oneshot
-
 service hciattach /system/bin/brcm_patchram_plus        \
   --baudrate 3000000 --tosleep 50000 --enable_hci       \
   --no2bytes --enable_lpm --scopcm 0,4,0,0,0,0,0,0,0,0  \

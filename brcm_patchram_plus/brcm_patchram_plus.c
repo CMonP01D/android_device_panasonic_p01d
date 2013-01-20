@@ -333,7 +333,7 @@ parse_bdaddr(char *optarg)
 	int bd_addr[6];
 	int i;
 
-	sscanf(optarg, "%02X:%02X:%02X:%02X:%02X:%02X",
+	sscanf(optarg, "%02X%02X%02X%02X%02X%02X",
 		&bd_addr[5], &bd_addr[4], &bd_addr[3],
 		&bd_addr[2], &bd_addr[1], &bd_addr[0]);
 
