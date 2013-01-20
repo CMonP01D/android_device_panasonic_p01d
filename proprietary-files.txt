@@ -4,7 +4,6 @@ bin/qmiproxy
 bin/qmuxd
 bin/rild
 bin/thermald
-bin/brcm_patchram_plus.dat
 
 lib/libdiag.so
 lib/libdsi_netctrl.so
