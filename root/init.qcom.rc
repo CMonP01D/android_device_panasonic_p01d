@@ -54,10 +54,6 @@ on boot
     chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
     chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
 
-    #Add by TaoYuan for bluetooth HCIT interface 2011.4.2
-    chown bluetooth bluetooth /system/etc/init.qcom.btcit.sh
-    chmod 0777 /system/etc/init.qcom.btcit.sh
-
     #Add by guliangzeng for remove battry reset 2011.9.2
     chmod 0777 /dev/misc_battery_boot
 
@@ -226,12 +222,6 @@ service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p10 /dev/block/mmc
 
 on property:ro.emmc=1
     start rmt_storage
-
-service bluetoothcit /system/bin/sh /system/etc/init.qcom.btcit.sh
-    user bluetooth
-    group qcom_oncrpc bluetooth net_bt_admin
-    disabled
-    oneshot
 
 service format_bdaddr /system/bin/format_bdaddr
     class core
