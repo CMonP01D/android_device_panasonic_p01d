@@ -29,10 +29,18 @@ LINEEND=" \\"
 COUNT=`cat proprietary-files.txt | grep -v ^# | grep -v ^$ | wc -l | awk {'print $1'}`
 for FILE in `cat proprietary-files.txt | grep -v ^# | grep -v ^$`; do
     COUNT=`expr $COUNT - 1`
+    echo "    $OUTDIR/proprietary/$FILE:system/$FILE$LINEEND" >> $MAKEFILE
+done
+
+COUNT=`cat proprietary-files-need-renamed.txt | grep -v ^# | grep -v ^$ | wc -l | awk {'print $1'}`
+for LINE in `cat proprietary-files-need-renamed.txt | grep -v ^# | grep -v ^$`; do
+    COUNT=`expr $COUNT - 1`
+    SOURCE_FILE=$(echo "$LINE" | cut -d':' -f1)
+    DEST_FILE=$(echo "$LINE" | cut -d':' -f2)
     if [ $COUNT = "0" ]; then
         LINEEND=""
     fi
-    echo "    $OUTDIR/proprietary/$FILE:system/$FILE$LINEEND" >> $MAKEFILE
+    echo "    $OUTDIR/proprietary/$SOURCE_FILE:system/$DEST_FILE$LINEEND" >> $MAKEFILE
 done
 
 (cat << EOF) > ../../../$OUTDIR/$DEVICE-vendor.mk
