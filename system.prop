@@ -10,3 +10,4 @@ ro.sf.lcd_density=240
 ro.config.libemoji=libemoji_docomo.so
 ro.telephony.ril.v3=datacall,singlepdp
 ro.bt.bdaddr_path=/data/simcom/btadd/bt_add.file
+ro.opengles.version=131072
