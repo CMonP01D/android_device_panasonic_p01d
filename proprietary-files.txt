@@ -24,6 +24,13 @@ lib/libril.so
 lib/libril-qcril-hook-oem.so
 lib/libril-qc-qmi-1.so
 
+lib/libirda_stack.so
+lib/libobex.so
+lib/libopp.so
+lib/liboppjni.so
+
+app/IrDA.apk
+
 etc/BCM4330.hcd
 etc/firmware/vidc_720p_h264_enc_mc.fw
 etc/firmware/vidc_720p_mp4_dec_mc.fw
