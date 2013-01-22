@@ -150,6 +150,9 @@ on boot
     mkdir /data/mobilecolor 0777 shell shell
     chmod 777 /data/mobilecolor
 
+    mkdir /data/system
+    mkdir /data/system/battery
+
 on fs
     mount yaffs2 mtd@persist /persist nosuid nodev
 
