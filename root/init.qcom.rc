@@ -400,3 +400,8 @@ service profiler_daemon /system/bin/profiler_daemon
     user root
     group root
     disabled
+
+service reset-gague /system/bin/sh /system/etc/init.reset.max17040.sh
+    class core
+    user root
+    oneshot
