@@ -38,7 +38,7 @@ PRODUCT_COPY_FILES += \
         frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml
 
 PRODUCT_PACKAGES += \
-        brcm_patchram_plus
+        brcm_patchram_plus_p01d
 
 PRODUCT_PACKAGES += \
         com.android.future.usb.accessory
@@ -47,6 +47,7 @@ PRODUCT_PACKAGES += \
         copybit.msm7x30 \
         gralloc.msm7x30 \
         hwcomposer.msm7x30 \
+        libgenlock \
         liboverlay \
         lights.default
 
