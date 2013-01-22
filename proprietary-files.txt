@@ -31,6 +31,8 @@ lib/liboppjni.so
 
 app/IrDA.apk
 
+etc/gauge.soc
+etc/gauge.vcell
 etc/BCM4330.hcd
 etc/firmware/vidc_720p_h264_enc_mc.fw
 etc/firmware/vidc_720p_mp4_dec_mc.fw
