@@ -374,3 +374,8 @@ service reset-gague /system/bin/sh /system/etc/init.reset.max17040.sh
     class core
     user root
     oneshot
+
+service start-touchpanel /system/bin/sh /system/etc/init.touchpanel.sh
+    class core
+    user root
+    oneshot

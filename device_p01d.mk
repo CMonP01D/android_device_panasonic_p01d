@@ -19,6 +19,7 @@ PRODUCT_COPY_FILES += \
         device/panasonic/p01d/system/init.qcom.sdio.sh:system/etc/init.qcom.sdio.sh \
         device/panasonic/p01d/system/init.qcom.wifi.sh:system/etc/init.qcom.wifi.sh \
         device/panasonic/p01d/system/init.reset.max17040.sh:system/etc/init.reset.max17040.sh \
+        device/panasonic/p01d/system/init.touchpanel.sh:system/etc/init.touchpanel.sh \
         device/panasonic/p01d/system/surf_keypad.kl:system/usr/keylayout/surf_keypad.kl \
         device/panasonic/p01d/vold.fstab:system/etc/vold.fstab
 
