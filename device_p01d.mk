@@ -16,7 +16,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
         device/panasonic/p01d/system/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc \
         device/panasonic/p01d/system/init.qcom.post_boot.sh:system/etc/init.qcom.post_boot.sh \
-        device/panasonic/p01d/system/init.qcom.sdio.sh:system/etc/init.qcom.sdio.sh \
         device/panasonic/p01d/system/init.reset.max17040.sh:system/etc/init.reset.max17040.sh \
         device/panasonic/p01d/system/init.touchpanel.sh:system/etc/init.touchpanel.sh \
         device/panasonic/p01d/system/surf_keypad.kl:system/usr/keylayout/surf_keypad.kl \
