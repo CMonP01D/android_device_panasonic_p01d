@@ -225,11 +225,6 @@ service hciattach /system/bin/brcm_patchram_plus_p01d   \
     disabled
     oneshot
 
-service qmiproxy /system/bin/qmiproxy
-    user radio
-    group radio
-    disabled
-
 service qmuxd /system/bin/qmuxd
     user radio
     group radio

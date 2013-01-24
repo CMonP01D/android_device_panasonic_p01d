@@ -1,6 +1,5 @@
 bin/memsicd
 bin/netmgrd
-bin/qmiproxy
 bin/qmuxd
 bin/rild
 bin/thermald
