@@ -44,9 +44,14 @@ PRODUCT_PACKAGES += \
         com.android.future.usb.accessory
 
 PRODUCT_PACKAGES += \
+        audio.a2dp.default \
+        audio_policy.msm7x30 \
+        audio.primary.msm7x30 \
         copybit.msm7x30 \
         gralloc.msm7x30 \
         hwcomposer.msm7x30 \
+        libaudioalsa \
+        libaudioutils \
         libgenlock \
         liboverlay \
         lights.default
