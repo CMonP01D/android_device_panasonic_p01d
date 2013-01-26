@@ -119,12 +119,6 @@ int msm_mixer_open(const char *name, int card) {
     if (ret < 0)
         LOGE("get elist failed %d %d", ret, errno);
     for (i = 0; i < mixercount; i++) {
-             elist.pids[i].numid,
-             elist.pids[i].name,
-             elist.pids[i].device,
-             elist.pids[i].subdevice,
-             elist.pids[i].index,
-             elist.pids[i].iface);
         einfo.id.numid = elist.pids[i].numid;
         ret = ioctl(mixerfd, SNDRV_CTL_IOCTL_ELEM_INFO, &einfo);
         if (ret < 0)
