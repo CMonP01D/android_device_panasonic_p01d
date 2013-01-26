@@ -118,9 +118,7 @@ int msm_mixer_open(const char *name, int card) {
     ret = ioctl(mixerfd, SNDRV_CTL_IOCTL_ELEM_LIST, &elist);
     if (ret < 0)
         LOGE("get elist failed %d %d", ret, errno);
-    LOGD("got elist %d", elist.count);
     for (i = 0; i < mixercount; i++) {
-        LOGD("id %d name %s: %d %d %d %x",
              elist.pids[i].numid,
              elist.pids[i].name,
              elist.pids[i].device,
@@ -131,12 +129,6 @@ int msm_mixer_open(const char *name, int card) {
         ret = ioctl(mixerfd, SNDRV_CTL_IOCTL_ELEM_INFO, &einfo);
         if (ret < 0)
             LOGE("get einfo failed %d %d", ret, errno);
-        LOGD("einfo type %d %d %d %ld %ld",
-              einfo.type,
-              einfo.access,
-              einfo.count,
-              einfo.value.integer.min,
-              einfo.value.integer.max);
         elval.id.numid = elist.pids[i].numid;
         elval.indirect = 0;
         elval.value.integer.value[0] = 0;
@@ -145,10 +137,6 @@ int msm_mixer_open(const char *name, int card) {
         ret = ioctl(mixerfd, SNDRV_CTL_IOCTL_ELEM_READ, &elval);
         if (ret < 0)
             LOGE("get eval failed %d %d", ret, errno);
-        LOGD("eval %ld %ld %ld",
-             elval.value.integer.value[0],
-             elval.value.integer.value[1],
-             elval.value.integer.value[2]);
         for (j = 0; j < NUM_CTRLS; j++) {
             if (!strcmp(ctrl_names[j], (const char *)elist.pids[i].name)) {
                 ctrls[j] = elist.pids[i].numid;
