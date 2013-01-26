@@ -54,6 +54,8 @@ PRODUCT_PACKAGES += \
         libaudioutils \
         libgenlock \
         liboverlay \
+        libQcomUI \
+        libtilerenderer \
         lights.default
 
 $(call inherit-product, build/target/product/full.mk)
