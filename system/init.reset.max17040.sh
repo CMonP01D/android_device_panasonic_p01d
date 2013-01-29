@@ -1,1 +1,0 @@
-ioctl /dev/atmel_tp_dev 17040

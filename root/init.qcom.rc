@@ -149,9 +149,6 @@ on boot
     mkdir /data/mobilecolor 0777 shell shell
     chmod 777 /data/mobilecolor
 
-    mkdir /data/system 0775 system system
-    mkdir /data/system/battery 0775 system system
-
 on fs
     mount yaffs2 mtd@persist /persist nosuid nodev
 
@@ -345,11 +342,6 @@ service profiler_daemon /system/bin/profiler_daemon
     user root
     group root
     disabled
-
-service reset-gague /system/bin/sh /system/etc/init.reset.max17040.sh
-    class core
-    user root
-    oneshot
 
 service start-touchpanel /system/bin/sh /system/etc/init.touchpanel.sh
     class core
