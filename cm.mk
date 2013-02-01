@@ -5,7 +5,7 @@ $(call inherit-product, vendor/cm/config/gsm.mk)
 PRODUCT_RELEASE_NAME := p01d
 
 # Inherit some common CM stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
+$(call inherit-product, device/panasonic/p01d/common_full_phone.mk)
 
 # Inherit device configuration
 $(call inherit-product, device/panasonic/p01d/device_p01d.mk)

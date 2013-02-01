@@ -11,6 +11,7 @@ DEVICE_PACKAGE_OVERLAYS += device/panasonic/p01d/overlay
 PRODUCT_COPY_FILES += \
         device/panasonic/p01d/root/init.qcom.rc:root/init.qcom.rc \
         device/panasonic/p01d/root/init.qcom.sh:root/init.qcom.sh \
+        device/panasonic/p01d/root/initlogo.rle:root/initlogo.rle \
         device/panasonic/p01d/root/ueventd.qcom.rc:root/ueventd.qcom.rc \
 
 PRODUCT_COPY_FILES += \
@@ -23,7 +24,6 @@ PRODUCT_COPY_FILES += \
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
         frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
-        frameworks/base/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
         frameworks/base/data/etc/android.hardware.location.xml:system/etc/permissions/android.hardware.location.xml \
         frameworks/base/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
         frameworks/base/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
@@ -56,7 +56,7 @@ PRODUCT_PACKAGES += \
         libtilerenderer \
         lights.default
 
-$(call inherit-product, build/target/product/full.mk)
+$(call inherit-product, device/panasonic/p01d/full_base.mk)
 
 PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=P_01D BUILD_FINGERPRINT=docomo/P_01D/pana2_1:2.3.4/GRH78/20120627.192518:user/release-keys PRIVATE_BUILD_DESC="P_01D-user 2.3.4 GRH78 20120627.192518 release-keys"
 PRODUCT_NAME := full_p01d
