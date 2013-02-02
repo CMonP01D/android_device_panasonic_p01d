@@ -51,6 +51,7 @@ PRODUCT_PACKAGES += \
         libaudioalsa \
         libaudioutils \
         libgenlock \
+        libmemalloc \
         liboverlay \
         libQcomUI \
         libtilerenderer \
