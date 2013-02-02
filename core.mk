@@ -20,7 +20,6 @@ PRODUCT_NAME := core
 
 PRODUCT_PACKAGES := \
     ApplicationsProvider \
-    BackupRestoreConfirmation \
     Contacts \
     ContactsProvider \
     DefaultContainerService \
@@ -33,7 +32,6 @@ PRODUCT_PACKAGES := \
     PackageInstaller \
     PicoTts \
     SettingsProvider \
-    SharedStorageBackup \
     TelephonyProvider \
     UserDictionaryProvider \
     VpnDialogs \
