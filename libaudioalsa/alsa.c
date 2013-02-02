@@ -80,7 +80,7 @@ int msm_mixer_count(void) {
 
     ret = ioctl(mixerfd, SNDRV_CTL_IOCTL_ELEM_LIST, &elist);
     if (ret < 0)
-        LOGE("get elist failed %d %s", ret, strerror(errno));
+        ALOGE("get elist failed %d %s", ret, strerror(errno));
 
     return elist.count;
 }
@@ -96,7 +96,7 @@ static int elem_write(int id, int v, int v1, int v2) {
     elval.value.integer.value[2] = v2;
     ret = ioctl(mixerfd, SNDRV_CTL_IOCTL_ELEM_WRITE, &elval);
     if (ret < 0)
-        LOGE("elem_write failed %d %s", ret, strerror(errno));
+        ALOGE("elem_write failed %d %s", ret, strerror(errno));
     return ret;
 }
 
@@ -109,7 +109,7 @@ int msm_mixer_open(const char *name, int card) {
     int ret;
 
     mixerfd = open(name, O_RDWR, 0);
-    LOGI("opened mixer %d %s %d", mixerfd, name, card);
+    ALOGI("opened mixer %d %s %d", mixerfd, name, card);
     mixercount = msm_mixer_count();
     elist.offset = 0;
     elist.space = mixercount;
@@ -117,12 +117,12 @@ int msm_mixer_open(const char *name, int card) {
     device_count = 0;
     ret = ioctl(mixerfd, SNDRV_CTL_IOCTL_ELEM_LIST, &elist);
     if (ret < 0)
-        LOGE("get elist failed %d %d", ret, errno);
+        ALOGE("get elist failed %d %d", ret, errno);
     for (i = 0; i < mixercount; i++) {
         einfo.id.numid = elist.pids[i].numid;
         ret = ioctl(mixerfd, SNDRV_CTL_IOCTL_ELEM_INFO, &einfo);
         if (ret < 0)
-            LOGE("get einfo failed %d %d", ret, errno);
+            ALOGE("get einfo failed %d %d", ret, errno);
         elval.id.numid = elist.pids[i].numid;
         elval.indirect = 0;
         elval.value.integer.value[0] = 0;
@@ -130,7 +130,7 @@ int msm_mixer_open(const char *name, int card) {
         elval.value.integer.value[2] = 0;
         ret = ioctl(mixerfd, SNDRV_CTL_IOCTL_ELEM_READ, &elval);
         if (ret < 0)
-            LOGE("get eval failed %d %d", ret, errno);
+            ALOGE("get eval failed %d %d", ret, errno);
         for (j = 0; j < NUM_CTRLS; j++) {
             if (!strcmp(ctrl_names[j], (const char *)elist.pids[i].name)) {
                 ctrls[j] = elist.pids[i].numid;
@@ -147,7 +147,7 @@ int msm_mixer_open(const char *name, int card) {
         }
     }
     for (i = 0; i < NUM_CTRLS;i++)
-        LOGD("ctrl %s=%d", ctrl_names[i], ctrls[i]);
+        ALOGD("ctrl %s=%d", ctrl_names[i], ctrls[i]);
     free(elist.pids);
     return 0;
 }
@@ -165,12 +165,12 @@ int msm_get_device(const char *name) {
 }
 
 int msm_en_device(int dev_id, short set) {
-    LOGD("Enable device %d %d", dev_id, set);
+    ALOGD("Enable device %d %d", dev_id, set);
     return elem_write(mixer_device[dev_id].elem_id, (int)set, 0, 0);
 }
 
 int msm_route_stream(int dir, int dec_id, int dev_id, int set) {
-    LOGD("Route Stream %d %d %d %d", dir, dec_id, dev_id, set);
+    ALOGD("Route Stream %d %d %d %d", dir, dec_id, dev_id, set);
     if (dir == 1) // PCM_PLAY
         return elem_write(ctrls[STREAM], dec_id, dev_id, set);
     else
@@ -179,12 +179,12 @@ int msm_route_stream(int dir, int dec_id, int dev_id, int set) {
 }
 
 int msm_route_voice(int rx, int tx, int set) {
-    LOGD("Route Voice %d %d %d", tx, rx, set);
+    ALOGD("Route Voice %d %d %d", tx, rx, set);
     return elem_write(ctrls[VOICE],rx, tx, set);  // tx and rx seem to be swapped here!
 }
 
 int msm_set_volume(int dec_id, float vol) {
-    LOGD("Set Volume %d %f", dec_id, vol);
+    ALOGD("Set Volume %d %f", dec_id, vol);
     return elem_write(ctrls[VOLUME], dec_id, (int)vol, 0);
 }
 
@@ -205,42 +205,42 @@ int msm_get_device_count(void) {
 }
 
 int msm_start_voice(void) {
-    LOGD("Start Voice");
+    ALOGD("Start Voice");
     return elem_write(ctrls[VOICECALL], 1, 0, 0);
 }
 
 int msm_end_voice(void) {
-    LOGD("End Voice");
+    ALOGD("End Voice");
     return elem_write(ctrls[VOICECALL], 0, 0, 0);
 }
 
 int msm_set_voice_tx_mute(int mute) {
-    LOGD("Set Voice tx Mute %d", mute);
+    ALOGD("Set Voice tx Mute %d", mute);
     return elem_write(ctrls[VOICEMUTE], 2, mute, 0); // 2 is DIR_TX
 }
 
 int msm_set_voice_rx_vol(int volume) {
-    LOGD("Set Voice rx Volume %d", volume);
+    ALOGD("Set Voice rx Volume %d", volume);
     return elem_write(ctrls[VOICEVOLUME], 1, volume, 0);
 }
 
 int msm_set_device_volume(int dev_id, int volume) {
-    LOGD("Set Device Volume %d %d", dev_id, volume);
+    ALOGD("Set Device Volume %d %d", dev_id, volume);
     return elem_write(ctrls[DEVICEVOLUME], dev_id, volume, 0);
 }
 
 int msm_reset_all_device(void) {
-    LOGD("Reset all devices");
+    ALOGD("Reset all devices");
     return elem_write(ctrls[RESET], 0, 0, 0);
 }
 
 int msm_dual_mic_swith(int session_id, int config) {
-    LOGD("Dual Mic Switch %d %d", session_id, config);
+    ALOGD("Dual Mic Switch %d %d", session_id, config);
     return elem_write(ctrls[DUALMICSWITCH], session_id, config, 0);
 }
 
 int msm_device_mute(int dev_id, int mute) {
-    LOGD("Device Mute %d %d\n", dev_id, mute);
+    ALOGD("Device Mute %d %d\n", dev_id, mute);
     return elem_write(ctrls[DEVICEMUTE], dev_id, mute, 0);
 }
 
