@@ -53,7 +53,6 @@ PRODUCT_PACKAGES += \
         libgenlock \
         libmemalloc \
         liboverlay \
-        libQcomUI \
         libtilerenderer \
         lights.default
 
