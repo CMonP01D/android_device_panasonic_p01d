@@ -81,7 +81,6 @@ on boot
     #Set SUID bit for usbhub
     chown system system /system/bin/usbhub
     chmod 755 /system/bin/usbhub
-    chmod 755 /system/bin/usbhub_init
 
     #Set pmem_adsp 
     chmod 777 /dev/pmem_adsp
@@ -189,15 +188,6 @@ on post-fs
 service memsicd /system/bin/memsicd
     class core
     oneshot
-
-# Export GPIO56 for fusion targets to enable/disable hub
-service usbhub_init /system/bin/usbhub_init
-   user root
-   disabled
-   oneshot
-
-on property:ro.product.device=msm7630_fusion
-    start usbhub_init
 
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
