@@ -788,7 +788,9 @@ proc_enable_hci()
 		fprintf(stderr, "Can't set hci protocol\n");
 		return;
 	}
-	fprintf(stderr, "Done setting line discpline\n");
+	if (debug) {
+		fprintf(stderr, "Done setting line discpline\n");
+	}
 	return;
 }
 
