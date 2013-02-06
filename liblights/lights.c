@@ -88,7 +88,7 @@ write_int(const char *path, int value)
         return -errno;
     }
 
-    bytes = sprintf(buffer, "%d\n", value);
+    bytes = snprintf(buffer, sizeof(buffer), "%d\n", value);
     bytes_written = write(fd, buffer, bytes);
     close(fd);
 
