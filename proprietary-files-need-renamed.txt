@@ -1,2 +1,1 @@
 lib/hw/sensors.msm7k.so:lib/hw/sensors.msm7x30.so
-lib/hw/lights.msm7k.so:lib/hw/lights.msm7x30.so

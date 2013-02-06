@@ -48,13 +48,13 @@ PRODUCT_PACKAGES += \
         copybit.msm7x30 \
         gralloc.msm7x30 \
         hwcomposer.msm7x30 \
+        lights.msm7x30 \
         libaudioalsa \
         libaudioutils \
         libgenlock \
         liboverlay \
         libQcomUI \
-        libtilerenderer \
-        lights.default
+        libtilerenderer
 
 $(call inherit-product, build/target/product/full.mk)
 
