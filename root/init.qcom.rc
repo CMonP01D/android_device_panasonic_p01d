@@ -81,7 +81,6 @@ on boot
     #Set SUID bit for usbhub
     chown system system /system/bin/usbhub
     chmod 755 /system/bin/usbhub
-    chmod 755 /system/bin/usbhub_init
 
     #Set pmem_adsp 
     chmod 777 /dev/pmem_adsp
@@ -142,6 +141,15 @@ on boot
     chmod 666 /dev/bma222
 
     chown system system /sys/class/leds/flash/brightness
+    chown system system /sys/class/leds/red/max_brightness
+    chown system system /sys/class/leds/red/led_blink_on
+    chown system system /sys/class/leds/red/led_blink_off
+    chown system system /sys/class/leds/green/max_brightness
+    chown system system /sys/class/leds/green/led_blink_on
+    chown system system /sys/class/leds/green/led_blink_off
+    chown system system /sys/class/leds/blue/max_brightness
+    chown system system /sys/class/leds/blue/led_blink_on
+    chown system system /sys/class/leds/blue/led_blink_off
     chown system system /sys/devices/platform/msm_hsusb/gadget/usb_testmode
 
     chmod 777 /dev/atmel_tp_dev
@@ -189,15 +197,6 @@ on post-fs
 service memsicd /system/bin/memsicd
     class core
     oneshot
-
-# Export GPIO56 for fusion targets to enable/disable hub
-service usbhub_init /system/bin/usbhub_init
-   user root
-   disabled
-   oneshot
-
-on property:ro.product.device=msm7630_fusion
-    start usbhub_init
 
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
