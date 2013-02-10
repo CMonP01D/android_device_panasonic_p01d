@@ -55,6 +55,7 @@ PRODUCT_PACKAGES += \
         libgenlock \
         liboverlay \
         libQcomUI \
+        libstagefrighthw \
         libtilerenderer
 
 $(call inherit-product, build/target/product/full.mk)
