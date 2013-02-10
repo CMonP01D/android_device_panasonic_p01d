@@ -56,6 +56,7 @@ PRODUCT_PACKAGES += \
         liboverlay \
         libQcomUI \
         libstagefrighthw \
+        Torch \
         libtilerenderer
 
 $(call inherit-product, build/target/product/full.mk)
