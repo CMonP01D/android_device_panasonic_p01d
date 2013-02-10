@@ -18,6 +18,7 @@ PRODUCT_COPY_FILES += \
         device/panasonic/p01d/system/init.qcom.post_boot.sh:system/etc/init.qcom.post_boot.sh \
         device/panasonic/p01d/system/init.touchpanel.sh:system/etc/init.touchpanel.sh \
         device/panasonic/p01d/system/surf_keypad.kl:system/usr/keylayout/surf_keypad.kl \
+        device/panasonic/p01d/system/media_codecs.xml:system/etc/media_codecs.xml \
         device/panasonic/p01d/vold.fstab:system/etc/vold.fstab
 
 # These are the hardware-specific features
