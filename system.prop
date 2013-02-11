@@ -13,3 +13,4 @@ ro.bt.bdaddr_path=/data/simcom/btadd/bt_add.file
 ro.opengles.version=131072
 com.qc.hdmi_out=false
 ro.ril.ecclist=110,118,119
+hwui.render_dirty_regions=false
