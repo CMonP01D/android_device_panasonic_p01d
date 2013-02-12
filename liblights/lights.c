@@ -82,7 +82,7 @@ write_int(const char *path, int value)
     fd = open(path, O_WRONLY);
     if (fd < 0) {
         if (already_warned == 0) {
-            LOGE("Failed to open %s due to %s.", path, strerror(errno));
+            ALOGE("Failed to open %s due to %s.", path, strerror(errno));
             already_warned = 1;
         }
         return -errno;
@@ -93,7 +93,7 @@ write_int(const char *path, int value)
     close(fd);
 
     if (bytes != bytes_written) {
-        LOGE("Failed to write %s to %s due to %s.", buffer, path, strerror(errno));
+        ALOGE("Failed to write %s to %s due to %s.", buffer, path, strerror(errno));
         return -errno;
     }
 
@@ -131,7 +131,7 @@ get_max_brightness(const char *path)
 
     fd = open(path, O_RDONLY);
     if (fd < 0) {
-        LOGE("Failed to open %s due to %s.", path, strerror(errno));
+        ALOGE("Failed to open %s due to %s.", path, strerror(errno));
         return -errno;
     }
 
@@ -139,7 +139,7 @@ get_max_brightness(const char *path)
     close(fd);
 
     if (ret < 0) {
-        LOGE("Failed to read max brightness from %s due to %s.", path, strerror(errno));
+        ALOGE("Failed to read max brightness from %s due to %s.", path, strerror(errno));
         return -errno;
     }
 
