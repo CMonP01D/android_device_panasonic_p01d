@@ -157,6 +157,8 @@ on boot
     chown system system /sys/class/leds/blue/led_blink_off
     chown system system /sys/devices/platform/msm_hsusb/gadget/usb_testmode
 
+    chmod 666 /sys/class/leds/flash/brightness
+
     chmod 777 /dev/atmel_tp_dev
 
     mkdir /data/mobilecolor 0777 shell shell
