@@ -23,7 +23,7 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/panasonic/p01d/bluetooth
 
 TARGET_KERNEL_CONFIG := cyanogenmod_ponyo_defconfig
 TARGET_KERNEL_SOURCE := kernel/panasonic/p01d
-BOARD_KERNEL_CMDLINE := console=ttyMSM1 androidboot.hardware=qcom
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom
 BOARD_KERNEL_BASE := 0x13800000
 BOARD_KERNEL_PAGESIZE := 4096
 
