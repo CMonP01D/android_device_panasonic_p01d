@@ -16,7 +16,7 @@
 #include <errno.h>
 #include "asound.h"
 #define LOG_TAG "LibAudioAlsa"
-//#define LOG_NDEBUG 0
+#define LOG_NDEBUG 1
 #include <utils/Log.h>
 
 #define MAX_DEVICES 64
@@ -147,7 +147,7 @@ int msm_mixer_open(const char *name, int card) {
         }
     }
     for (i = 0; i < NUM_CTRLS;i++)
-        ALOGD("ctrl %s=%d", ctrl_names[i], ctrls[i]);
+        ALOGV("ctrl %s=%d", ctrl_names[i], ctrls[i]);
     free(elist.pids);
     return 0;
 }
@@ -165,12 +165,12 @@ int msm_get_device(const char *name) {
 }
 
 int msm_en_device(int dev_id, short set) {
-    ALOGD("Enable device %d %d", dev_id, set);
+    ALOGV("Enable device %d %d", dev_id, set);
     return elem_write(mixer_device[dev_id].elem_id, (int)set, 0, 0);
 }
 
 int msm_route_stream(int dir, int dec_id, int dev_id, int set) {
-    ALOGD("Route Stream %d %d %d %d", dir, dec_id, dev_id, set);
+    ALOGV("Route Stream %d %d %d %d", dir, dec_id, dev_id, set);
     if (dir == 1) // PCM_PLAY
         return elem_write(ctrls[STREAM], dec_id, dev_id, set);
     else
@@ -179,12 +179,12 @@ int msm_route_stream(int dir, int dec_id, int dev_id, int set) {
 }
 
 int msm_route_voice(int rx, int tx, int set) {
-    ALOGD("Route Voice %d %d %d", tx, rx, set);
+    ALOGV("Route Voice %d %d %d", tx, rx, set);
     return elem_write(ctrls[VOICE],rx, tx, set);  // tx and rx seem to be swapped here!
 }
 
 int msm_set_volume(int dec_id, float vol) {
-    ALOGD("Set Volume %d %f", dec_id, vol);
+    ALOGV("Set Volume %d %f", dec_id, vol);
     return elem_write(ctrls[VOLUME], dec_id, (int)vol, 0);
 }
 
@@ -205,42 +205,42 @@ int msm_get_device_count(void) {
 }
 
 int msm_start_voice(void) {
-    ALOGD("Start Voice");
+    ALOGV("Start Voice");
     return elem_write(ctrls[VOICECALL], 1, 0, 0);
 }
 
 int msm_end_voice(void) {
-    ALOGD("End Voice");
+    ALOGV("End Voice");
     return elem_write(ctrls[VOICECALL], 0, 0, 0);
 }
 
 int msm_set_voice_tx_mute(int mute) {
-    ALOGD("Set Voice tx Mute %d", mute);
+    ALOGV("Set Voice tx Mute %d", mute);
     return elem_write(ctrls[VOICEMUTE], 2, mute, 0); // 2 is DIR_TX
 }
 
 int msm_set_voice_rx_vol(int volume) {
-    ALOGD("Set Voice rx Volume %d", volume);
+    ALOGV("Set Voice rx Volume %d", volume);
     return elem_write(ctrls[VOICEVOLUME], 1, volume, 0);
 }
 
 int msm_set_device_volume(int dev_id, int volume) {
-    ALOGD("Set Device Volume %d %d", dev_id, volume);
+    ALOGV("Set Device Volume %d %d", dev_id, volume);
     return elem_write(ctrls[DEVICEVOLUME], dev_id, volume, 0);
 }
 
 int msm_reset_all_device(void) {
-    ALOGD("Reset all devices");
+    ALOGV("Reset all devices");
     return elem_write(ctrls[RESET], 0, 0, 0);
 }
 
 int msm_dual_mic_swith(int session_id, int config) {
-    ALOGD("Dual Mic Switch %d %d", session_id, config);
+    ALOGV("Dual Mic Switch %d %d", session_id, config);
     return elem_write(ctrls[DUALMICSWITCH], session_id, config, 0);
 }
 
 int msm_device_mute(int dev_id, int mute) {
-    ALOGD("Device Mute %d %d\n", dev_id, mute);
+    ALOGV("Device Mute %d %d\n", dev_id, mute);
     return elem_write(ctrls[DEVICEMUTE], dev_id, mute, 0);
 }
 
