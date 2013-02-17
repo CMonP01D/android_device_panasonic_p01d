@@ -61,6 +61,7 @@ PRODUCT_PACKAGES += \
         libmemalloc \
         liboverlay \
         libstagefrighthw \
+        power.msm7x30 \
         Torch \
         libtilerenderer
 
