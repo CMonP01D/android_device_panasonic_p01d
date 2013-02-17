@@ -15,6 +15,7 @@ PRODUCT_COPY_FILES += \
         device/panasonic/p01d/root/init.qcom.sh:root/init.qcom.sh \
         device/panasonic/p01d/root/initlogo.rle:root/initlogo.rle \
         device/panasonic/p01d/root/ueventd.qcom.rc:root/ueventd.qcom.rc \
+        device/panasonic/p01d/root/lpm.rc:root/lpm.rc
 
 PRODUCT_COPY_FILES += \
         device/panasonic/p01d/system/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc \
@@ -46,6 +47,10 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
         com.android.future.usb.accessory
+
+PRODUCT_PACKAGES += \
+        charger \
+        charger_res_images
 
 PRODUCT_PACKAGES += \
         audio.a2dp.default \
