@@ -5,6 +5,8 @@ DEVICE=p01d
 
 BASE=../../../vendor/$VENDOR/$DEVICE/proprietary
 
+adb get-serialno > serialno
+
 echo "Pulling device files..."
 for FILE in `cat proprietary-files.txt | grep -v ^# | grep -v ^$`; do
     DIR=`dirname $FILE`

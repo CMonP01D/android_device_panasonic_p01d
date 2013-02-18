@@ -3,6 +3,13 @@ USE_CAMERA_STUB := true
 # inherit from the proprietary version
 -include vendor/panasonic/p01d/BoardConfigVendor.mk
 
+BOARD_SERIALNO_PATH := device/panasonic/p01d/serialno
+ifeq ($(wildcard $(BOARD_SERIALNO_PATH)),)
+TARGET_SERIALNO := P01D
+else
+TARGET_SERIALNO := $(shell cat $(BOARD_SERIALNO_PATH))
+endif
+
 TARGET_NO_BOOTLOADER := true
 TARGET_BOARD_PLATFORM := msm7x30
 TARGET_CPU_ABI := armeabi-v7a
@@ -23,7 +30,7 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/panasonic/p01d/bluetooth
 
 TARGET_KERNEL_CONFIG := cyanogenmod_ponyo_defconfig
 TARGET_KERNEL_SOURCE := kernel/panasonic/p01d
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.serialno=$(TARGET_SERIALNO)
 BOARD_KERNEL_BASE := 0x13800000
 BOARD_KERNEL_PAGESIZE := 4096
 
