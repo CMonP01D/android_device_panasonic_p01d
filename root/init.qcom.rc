@@ -37,9 +37,6 @@ on init
 
     symlink /data/mobilecolor /tmp
 
-on boot-pause
-    exec system/bin/battery_charging
-
 on boot
     chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
@@ -362,3 +359,6 @@ service start-touchpanel /system/bin/sh /system/etc/init.touchpanel.sh
     class core
     user root
     oneshot
+
+service battery_charger /charger
+    class charger
