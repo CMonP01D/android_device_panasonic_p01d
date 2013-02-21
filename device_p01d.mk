@@ -23,6 +23,7 @@ PRODUCT_COPY_FILES += \
         device/panasonic/p01d/system/init.touchpanel.sh:system/etc/init.touchpanel.sh \
         device/panasonic/p01d/system/surf_keypad.kl:system/usr/keylayout/surf_keypad.kl \
         device/panasonic/p01d/system/media_codecs.xml:system/etc/media_codecs.xml \
+        device/panasonic/p01d/system/media_profiles.xml:system/etc/media_profiles.xml \
         device/panasonic/p01d/vold.fstab:system/etc/vold.fstab
 
 # These are the hardware-specific features
@@ -56,6 +57,7 @@ PRODUCT_PACKAGES += \
         audio.a2dp.default \
         audio_policy.msm7x30 \
         audio.primary.msm7x30 \
+        camera.msm7x30 \
         copybit.msm7x30 \
         gralloc.msm7x30 \
         hwcomposer.msm7x30 \

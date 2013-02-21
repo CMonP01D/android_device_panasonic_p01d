@@ -28,6 +28,12 @@ lib/libobex.so
 lib/libopp.so
 lib/liboppjni.so
 
+lib/libgemini.so
+lib/libmmipl.so
+lib/libmmjpeg.so
+lib/liboemcamera.so
+lib/libcamera.so
+
 app/IrDA.apk
 
 etc/BCM4330.hcd
