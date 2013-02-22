@@ -30,6 +30,13 @@
 #include <utils/RefBase.h>
 #include <CameraHardwareInterface.h>
 
+typedef struct _local_camera_device {
+    camera_device_t device;
+
+    android::sp<android::CameraHardwareInterface> camera;
+
+} local_camera_device;
+
 struct stock_camera_info {
     int facing;
     int mode;
@@ -53,7 +60,6 @@ static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
 
 static bool g_initialized = false;
 static void *g_libcamera = NULL;
-android::sp<android::CameraHardwareInterface> g_camera;
 
 static void *
 open_libcamera(void)
@@ -99,21 +105,6 @@ init_globals(void)
     pthread_mutex_init(&g_lock, NULL);
 
     g_initialized = load_libcamera();
-}
-
-static int
-close_camera(hw_device_t *dev)
-{
-    ALOGV("%s", __PRETTY_FUNCTION__);
-    if (g_libcamera) {
-        dlclose(g_libcamera);
-        g_libcamera = NULL;
-    }
-
-    if (dev) {
-        free(dev);
-    }
-    return 0;
 }
 
 static int
@@ -303,12 +294,36 @@ dump(camera_device_t *device, int fd)
     return 0;
 }
 
+static void
+free_local_camera_device(local_camera_device *device)
+{
+    if (!device)
+        return;
+
+    free(device);
+}
+
+static int
+close_camera(hw_device_t *dev)
+{
+    ALOGV("%s", __PRETTY_FUNCTION__);
+    if (g_libcamera) {
+        dlclose(g_libcamera);
+        g_libcamera = NULL;
+    }
+
+    if (dev) {
+        free_local_camera_device((local_camera_device*)dev);
+    }
+    return 0;
+}
+
 static int
 open_camera(const hw_module_t *module,
             const char *id,
             hw_device_t **device)
 {
-    camera_device_t *dev;
+    local_camera_device *local_device;
     camera_device_ops_t *ops;
     int mode = CAMERA_MODE_2D | CAMERA_NONZSL_MODE;
 
@@ -316,21 +331,23 @@ open_camera(const hw_module_t *module,
 
     pthread_once(&g_init, init_globals);
 
-    g_camera = LINK_openCameraHardware(atoi(id), mode, 0);
-    if (g_camera == 0)
+    android::sp<android::CameraHardwareInterface> camera;
+    camera = LINK_openCameraHardware(atoi(id), mode, 0);
+    if (camera == 0)
         return -ENOMEM;
 
-    dev = static_cast<camera_device_t*>(calloc(sizeof(camera_device_t), 1));
-    if (!dev) {
+    local_device = static_cast<local_camera_device*>(calloc(sizeof(local_camera_device), 1));
+    if (!local_device) {
         return -ENOMEM;
     }
 
     ops = static_cast<camera_device_ops_t*>(calloc(sizeof(camera_device_ops_t), 1));
     if (!ops) {
-        free(dev);
+        free_local_camera_device(local_device);
         return -ENOMEM;
     }
 
+    camera_device_t *dev = (camera_device_t*)(local_device);
     dev->common.tag = HARDWARE_DEVICE_TAG;
     dev->common.version = 0;
     dev->common.module = (hw_module_t *)module;
@@ -361,8 +378,9 @@ open_camera(const hw_module_t *module,
     ops->dump = dump;
 
     dev->ops = ops;
+    local_device->camera = camera;
 
-    *device = (hw_device_t*)(dev);
+    *device = (hw_device_t*)(&local_device);
     return 0;
 }
 
