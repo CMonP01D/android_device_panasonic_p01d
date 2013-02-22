@@ -297,9 +297,12 @@ dump(camera_device_t *device, int fd)
 static void
 free_local_camera_device(local_camera_device *device)
 {
+    camera_device_t *camera_device;
     if (!device)
         return;
 
+    camera_device = (camera_device_t*)(device);
+    free(camera_device->ops);
     free(device);
 }
 
