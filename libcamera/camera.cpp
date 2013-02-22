@@ -327,6 +327,7 @@ open_camera(const hw_module_t *module,
 
     ops = static_cast<camera_device_ops_t*>(calloc(sizeof(camera_device_ops_t), 1));
     if (!ops) {
+        free(dev);
         return -ENOMEM;
     }
 
