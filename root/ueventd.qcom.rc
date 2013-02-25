@@ -75,4 +75,6 @@
 /dev/msm_preproc_ctl      0660  system       audio
 /dev/msm_a2dp_in          0640  system       audio
 /dev/msm_amrnb_in         0640  system       audio
-/sys/devices/virtual/usb_composite/*   enable      0664  root   system
+/dev/oncrpc/*             0666   root       qcom_oncrpc
+/dev/msm_camera/*         0666   system     system
+#/sys/devices/virtual/usb_composite/*   enable      0664  root   system
