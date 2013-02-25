@@ -113,6 +113,9 @@ get_number_of_cameras(void)
     ALOGV("%s", __PRETTY_FUNCTION__);
     pthread_once(&g_init, init_globals);
 
+    if (!g_initialized)
+        return 0;
+
     return LINK_getNumberofCameras();
 }
 
@@ -123,6 +126,9 @@ get_camera_info(int camera_id, struct camera_info *info)
     ALOGV("%s", __PRETTY_FUNCTION__);
 
     pthread_once(&g_init, init_globals);
+
+    if (!g_initialized)
+        return 0;
 
     LINK_getCameraInfo(camera_id, &stock_info);
     info->facing = stock_info.facing;
