@@ -342,8 +342,10 @@ open_camera(const hw_module_t *module,
 
     android::sp<android::CameraHardwareInterface> camera;
     camera = LINK_openCameraHardware(atoi(id), mode, 0);
-    if (camera == 0)
+    if (camera == 0) {
+        ALOGE("Failed to open camera device.");
         return -ENOMEM;
+    }
 
     local_device = static_cast<local_camera_device*>(calloc(sizeof(local_camera_device), 1));
     if (!local_device) {
