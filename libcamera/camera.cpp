@@ -28,13 +28,32 @@
 
 #include <hardware/camera.h>
 #include <utils/RefBase.h>
-#include <CameraHardwareInterface.h>
+#include "CameraHardwareInterface.h"
+
+using android::sp;
+using android::CameraHardwareInterface;
+using android::CameraParameters;
+using android::String8;
+using android::IMemory;
+using android::IMemoryHeap;
+using android::NO_INIT;
+using android::INVALID_OPERATION;
 
 typedef struct _local_camera_device {
     camera_device_t device;
 
-    android::sp<android::CameraHardwareInterface> camera;
+    sp<CameraHardwareInterface> camera;
 
+    preview_stream_ops *window;
+
+    camera_notify_callback notify_callback;
+    camera_data_callback data_callback;
+    camera_data_timestamp_callback data_timestamp_callback;
+    camera_request_memory request_memory;
+    void *user;
+
+    int preview_width;
+    int preview_height;
 } local_camera_device;
 
 struct stock_camera_info {
@@ -53,7 +72,7 @@ enum {
 
 int (*LINK_getNumberofCameras)(void);
 void (*LINK_getCameraInfo)(int cameraId, struct stock_camera_info *info);
-android::sp<android::CameraHardwareInterface> (*LINK_openCameraHardware)(int id, int mode, int what);
+sp<CameraHardwareInterface> (*LINK_openCameraHardware)(int id, int mode, int what);
 
 static pthread_once_t g_init = PTHREAD_ONCE_INIT;
 static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
@@ -79,15 +98,19 @@ load_libcamera(void)
 {
     void *libcamera = open_libcamera();
 
-    if (!libcamera)
+    if (!libcamera) {
         return false;
+    }
 
-    if (!dlsym(libcamera, "HAL_getNumberOfCameras"))
+    if (!dlsym(libcamera, "HAL_getNumberOfCameras")) {
         return false;
-    if (!dlsym(libcamera, "HAL_getCameraInfo"))
+    }
+    if (!dlsym(libcamera, "HAL_getCameraInfo")) {
         return false;
-    if (!dlsym(libcamera, "HAL_openCameraHardware"))
+    }
+    if (!dlsym(libcamera, "HAL_openCameraHardware")) {
         return false;
+    }
 
     *(void**)&LINK_getNumberofCameras = dlsym(libcamera, "HAL_getNumberOfCameras");
     *(void**)&LINK_getCameraInfo = dlsym(libcamera, "HAL_getCameraInfo");
@@ -113,8 +136,9 @@ get_number_of_cameras(void)
     ALOGV("%s", __PRETTY_FUNCTION__);
     pthread_once(&g_init, init_globals);
 
-    if (!g_initialized)
+    if (!g_initialized) {
         return 0;
+    }
 
     return LINK_getNumberofCameras();
 }
@@ -127,8 +151,9 @@ get_camera_info(int camera_id, struct camera_info *info)
 
     pthread_once(&g_init, init_globals);
 
-    if (!g_initialized)
+    if (!g_initialized) {
         return 0;
+    }
 
     LINK_getCameraInfo(camera_id, &stock_info);
     info->facing = stock_info.facing;
@@ -139,11 +164,165 @@ get_camera_info(int camera_id, struct camera_info *info)
     return 0;
 }
 
+sp<CameraHardwareInterface>
+get_local_device(camera_device_t *device)
+{
+    if (!device) {
+        return 0;
+    }
+
+    local_camera_device *local = (local_camera_device*)device;
+    return local->camera;
+}
+
 static int
 set_preview_window(camera_device_t *device, struct preview_stream_ops *window)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
+
+    if (!window) {
+        ALOGD("%s: window is NULL", __FUNCTION__);
+        return 0;
+    }
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NO_INIT;
+    }
+
+    int min_bufs = -1;
+    int kBufferCount = 4;
+    local_camera_device* dev = NULL;
+
+    dev = (local_camera_device*) device;
+
+    dev->window = window;
+
+    if (window->get_min_undequeued_buffer_count(window, &min_bufs)) {
+        ALOGE("%s: could not retrieve min undequeued buffer count", __FUNCTION__);
+        return -1;
+    }
+
+    ALOGD("%s: bufs:%i", __FUNCTION__, min_bufs);
+
+    if (min_bufs >= kBufferCount) {
+        ALOGE("%s: min undequeued buffer count %i is too high (expecting at most %i)",
+              __FUNCTION__, min_bufs, kBufferCount - 1);
+    }
+
+    ALOGD("%s: setting buffer count to %i", __FUNCTION__, kBufferCount);
+    if (window->set_buffer_count(window, kBufferCount)) {
+        ALOGE("%s: could not set buffer count", __FUNCTION__);
+        return -1;
+    }
+
+    int preview_width;
+    int preview_height;
+    CameraParameters params(camera->getParameters());
+    params.getPreviewSize(&preview_width, &preview_height);
+    int hal_pixel_format = HAL_PIXEL_FORMAT_YCrCb_420_SP;
+
+    const char *str_preview_format = params.getPreviewFormat();
+    ALOGD("%s: preview format %s", __FUNCTION__, str_preview_format);
+
+    if (window->set_usage(window, GRALLOC_USAGE_SW_WRITE_MASK)) {
+        ALOGE("%s: could not set usage on gralloc buffer", __FUNCTION__);
+        return -1;
+    }
+
+    if (window->set_buffers_geometry(window, preview_width,
+                                     preview_height, hal_pixel_format)) {
+        ALOGE("%s: could not set buffers geometry to %s",
+             __FUNCTION__, str_preview_format);
+        return -1;
+    }
+
+    dev->preview_width = preview_width;
+    dev->preview_height = preview_height;
+
     return 0;
+}
+
+static camera_memory_t *
+wrap_memory_data(local_camera_device *dev, const sp<IMemory>& dataPtr)
+{
+    void *data;
+    size_t size;
+    ssize_t offset;
+    sp<IMemoryHeap> heap;
+    camera_memory_t *mem;
+
+    ALOGV("%s", __FUNCTION__);
+
+    if (!dev->request_memory) {
+        return NULL;
+    }
+
+    heap = dataPtr->getMemory(&offset, &size);
+    data = (void *)((char *)(heap->base()) + offset);
+
+    ALOGV("%s: data: 0x%p size: %i", __FUNCTION__, data, size);
+
+    mem = dev->request_memory(-1, size, 1, dev->user);
+    memcpy(mem->data, data, size);
+
+    return mem;
+}
+
+static void
+wrap_notify_callback(int32_t msg_type, int32_t ext1, int32_t ext2, void* user)
+{
+    local_camera_device* dev = NULL;
+
+    ALOGV("%s: type %i", __FUNCTION__, msg_type);
+
+    if (!user) {
+        return;
+    }
+
+    dev = (local_camera_device*) user;
+
+    if (dev->notify_callback) {
+        dev->notify_callback(msg_type, ext1, ext2, dev->user);
+    }
+}
+
+static void
+wrap_data_callback(int32_t msg_type,
+                   const sp<IMemory>& dataPtr,
+                   void* user)
+{
+    camera_memory_t *data = NULL;
+    local_camera_device* dev = NULL;
+
+    ALOGV("%s: type %i", __FUNCTION__, msg_type);
+
+    if (!user) {
+        return;
+    }
+
+    dev = (local_camera_device*) user;
+
+    data = wrap_memory_data(dev, dataPtr);
+
+    if (dev->data_callback) {
+        dev->data_callback(msg_type, data, 0, NULL, dev->user);
+    }
+}
+
+static void
+wrap_data_callback_timestamp(nsecs_t timestamp, int32_t msg_type,
+                             const sp<IMemory>& dataPtr, void* user)
+{
+    local_camera_device* dev = NULL;
+
+    ALOGV("%s: type %i", __FUNCTION__, msg_type);
+
+    if (!user) {
+        return;
+    }
+
+    dev = (local_camera_device*) user;
 }
 
 
@@ -155,113 +334,239 @@ set_callbacks(camera_device_t *device,
               camera_request_memory get_memory,
               void *user)
 {
-    ALOGV("%s", __PRETTY_FUNCTION__);
+    ALOGE("%s", __PRETTY_FUNCTION__);
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return;
+    }
+
+    local_camera_device *local = (local_camera_device*)device;
+
+    local->notify_callback = notify_cb;
+    local->data_callback = data_cb;
+    local->data_timestamp_callback = data_cb_timestamp;
+    local->request_memory = get_memory;
+    local->user = user;
+
+    ALOGE("%s %d %p", __PRETTY_FUNCTION__, __LINE__, camera.get());
+
+    camera->setCallbacks(wrap_notify_callback,
+                         wrap_data_callback,
+                         wrap_data_callback_timestamp,
+                         (void *)local);
 }
 
 static void
 enable_msg_type(camera_device_t *device, int32_t msg_type)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return;
+    }
+
+    camera->enableMsgType(msg_type);
 }
 
 static void
 disable_msg_type(camera_device_t *device, int32_t msg_type)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return;
+    }
+
+    camera->disableMsgType(msg_type);
 }
 
 static int
 msg_type_enabled(camera_device_t *device, int32_t msg_type)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
-    return 0;
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NO_INIT;
+    }
+
+    return camera->msgTypeEnabled(msg_type);
 }
 
 static int
 start_preview(camera_device_t *device)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
-    return 0;
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NO_INIT;
+    }
+
+    return camera->startPreview();
 }
 
 static void
 stop_preview(camera_device_t *device)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return;
+    }
+
+    camera->stopPreview();
 }
 
 static int
 preview_enabled(camera_device_t *device)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
-    return 0;
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NO_INIT;
+    }
+
+    return camera->previewEnabled();
 }
 
 static int
 store_meta_data_in_buffers(camera_device_t *device, int enable)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
-    return 0;
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NO_INIT;
+    }
+
+    return INVALID_OPERATION;
 }
 
 static int
 start_recording(camera_device_t *device)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
-    return 0;
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NO_INIT;
+    }
+
+    return camera->startRecording();
 }
 
 static void
 stop_recording(camera_device_t *device)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return;
+    }
+
+    camera->stopRecording();
 }
 
 static int
 recording_enabled(camera_device_t *device)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
-    return 0;
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NO_INIT;
+    }
+
+    return camera->recordingEnabled();
 }
 
 static void
 release_recording_frame(camera_device_t *device, const void *opaque)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return;
+    }
+
+    camera->releaseRecordingFrame((IMemory*)opaque);
 }
 
 static int
 auto_focus(camera_device_t *device)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
-    return 0;
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NO_INIT;
+    }
+
+    return camera->autoFocus();
 }
 
 static int
 cancel_auto_focus(camera_device_t *device)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
-    return 0;
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NO_INIT;
+    }
+
+    return camera->cancelAutoFocus();
 }
 
 static int
 take_picture(camera_device_t *device)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
-    return 0;
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NO_INIT;
+    }
+
+    return camera->takePicture();
 }
 
 static int
 cancel_picture(camera_device_t *device)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
-    return 0;
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NO_INIT;
+    }
+
+    return camera->cancelPicture();
 }
 
 static int
-set_parameters(camera_device_t *device, const char *paremeters)
+set_parameters(camera_device_t *device, const char *parameters)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NO_INIT;
+    }
+
+    CameraParameters param;
+    param.unflatten(String8(parameters));
+
+    int ret = camera->setParameters(param);
+
     return 0;
 }
 
@@ -270,7 +575,16 @@ get_parameters(camera_device_t *device)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
 
-    return NULL;
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NULL;
+    }
+
+    CameraParameters parameters;
+    parameters = camera->getParameters();
+    String8 string = parameters.flatten();
+
+    return strdup(string.string());
 }
 
 static void
@@ -284,13 +598,26 @@ send_command(camera_device_t *device,
              int32_t cmd, int32_t arg1, int32_t arg2)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
-    return 0;
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return NO_INIT;
+    }
+
+    return camera->sendCommand(cmd, arg1, arg2);
 }
 
 static void
 release(camera_device_t *device)
 {
     ALOGV("%s", __PRETTY_FUNCTION__);
+
+    sp<CameraHardwareInterface> camera = get_local_device(device);
+    if (camera == 0) {
+        return;
+    }
+
+    camera->release();
 }
 
 static int
@@ -304,8 +631,9 @@ static void
 free_local_camera_device(local_camera_device *device)
 {
     camera_device_t *camera_device;
-    if (!device)
+    if (!device) {
         return;
+    }
 
     camera_device = (camera_device_t*)(device);
     free(camera_device->ops);
@@ -324,6 +652,7 @@ close_camera(hw_device_t *dev)
     if (dev) {
         free_local_camera_device((local_camera_device*)dev);
     }
+
     return 0;
 }
 
@@ -340,7 +669,7 @@ open_camera(const hw_module_t *module,
 
     pthread_once(&g_init, init_globals);
 
-    android::sp<android::CameraHardwareInterface> camera;
+    sp<CameraHardwareInterface> camera;
     camera = LINK_openCameraHardware(atoi(id), mode, 0);
     if (camera == 0) {
         ALOGE("Failed to open camera device.");
@@ -391,7 +720,7 @@ open_camera(const hw_module_t *module,
     dev->ops = ops;
     local_device->camera = camera;
 
-    *device = (hw_device_t*)(&local_device);
+    *device = &local_device->device.common;
     return 0;
 }
 
