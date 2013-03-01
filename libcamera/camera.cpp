@@ -349,8 +349,6 @@ set_callbacks(camera_device_t *device,
     local->request_memory = get_memory;
     local->user = user;
 
-    ALOGE("%s %d %p", __PRETTY_FUNCTION__, __LINE__, camera.get());
-
     camera->setCallbacks(wrap_notify_callback,
                          wrap_data_callback,
                          wrap_data_callback_timestamp,
