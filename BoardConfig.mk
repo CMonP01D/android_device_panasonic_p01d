@@ -49,7 +49,7 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 
 WPA_SUPPLICANT_VERSION      := VER_0_8_X
-BOARD_WLAN_DEVICE           := bcm4329
+BOARD_WLAN_DEVICE           := bcm4330
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
 WIFI_DRIVER_MODULE_NAME     := "bcm4330"
@@ -57,3 +57,4 @@ WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcm4330.ko"
 WIFI_DRIVER_MODULE_ARG      := "firmware_path=/etc/firmware/wlan/sdio_cit.bin nvram_path=/etc/firmware/wlan/nvram.txt"
 WIFI_DRIVER_FW_PATH_STA     := "/etc/firmware/wlan/sdio.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/etc/firmware/wlan/sdio_apsta.bin"
+WIFI_DRIVER_SOCKET_IFACE    := "DIR=/data/misc/wifi/wpa_supplicant GROUP=wifi"
