@@ -16,6 +16,7 @@ on post-fs-data
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
 
+    mkdir /data/system 0775 system system
     symlink /data/misc/wifi/wpa_supplicant /data/system/wpa_supplicant
 
 on property:init.svc.wpa_supplicant=stopped
