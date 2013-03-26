@@ -108,6 +108,7 @@
   <project path="hardware/qcom/gps" name="platform/hardware/qcom/gps" />
   <project path="hardware/msm7k" name="platform/hardware/msm7k" />
   <project path="vendor/qcom/opensource/omx/mm-core" name="platform/vendor/qcom-opensource/omx/mm-core" />
+  <project path="vendor/qcom/adreno200" name="android_vendor_qcom_adreno200" remote="hiikezoe" revision="cm-9.1.0" />
   <project path="hardware/ril" name="platform/hardware/ril" remote="caf" revision="fe9a3f63922143b57e79ed570bab2328df8c83a5"/>
 </manifest>
 
