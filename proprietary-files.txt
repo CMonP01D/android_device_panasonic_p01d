@@ -1,0 +1,5 @@
+etc/firmware/wlan/nvram.txt
+etc/firmware/wlan/qcom_cfg.ini
+etc/firmware/wlan/sdio_apsta.bin
+etc/firmware/wlan/sdio.bin
+etc/firmware/wlan/sdio_cit.bin
