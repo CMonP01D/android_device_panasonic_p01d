@@ -27,7 +27,7 @@ service start-touchpanel /system/bin/sh /system/etc/init.touchpanel.sh
     oneshot
 
 service wpa_supplicant /system/bin/wpa_supplicant \
-	-iwlan0 -Dwext -CDIR=/data/misc/wifi/wpa_supplicant\ GROUP=wifi -e/data/misc/wifi/entropy.bin
+	-iwlan0 -Dwext -c/data/misc/wifi/wpa_supplicant.conf -e/data/misc/wifi/entropy.bin -ddd
     class late_start
     user root
     group wifi inet

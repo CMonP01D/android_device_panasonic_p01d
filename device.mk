@@ -4,6 +4,7 @@ PRODUCT_COPY_FILES += \
   device/panasonic/p01d/ueventd.qcom.rc:root/ueventd.qcom.rc \
   device/panasonic/p01d/system/init.touchpanel.sh:system/etc/init.touchpanel.sh \
   device/panasonic/p01d/system/init.qcom.sdio.sh:system/etc/init.qcom.sdio.sh \
+  device/panasonic/p01d/system/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
   device/panasonic/p01d/system/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc
 
 PRODUCT_PACKAGES += \
