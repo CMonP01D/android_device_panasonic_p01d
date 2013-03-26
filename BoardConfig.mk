@@ -3,6 +3,7 @@
 
 TARGET_NO_BOOTLOADER := true
 TARGET_BOARD_PLATFORM := msm7x30
+QCOM_BOARD_PLATFORMS := $(TARGET_BOARD_PLATFORM)
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH := arm
@@ -42,6 +43,7 @@ BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
 TARGET_USES_OVERLAY := true
 TARGET_GRALLOC_USES_ASHMEM := true
 COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
+TARGET_USES_C2D_COMPOSITION := true
 BOARD_USES_AUDIO_LEGACY := true
 USE_CAMERA_STUB := true
 
@@ -58,3 +60,5 @@ WIFI_DRIVER_MODULE_ARG      := "firmware_path=/etc/firmware/wlan/sdio_cit.bin nv
 WIFI_DRIVER_FW_PATH_STA     := "/etc/firmware/wlan/sdio.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/etc/firmware/wlan/sdio_apsta.bin"
 WIFI_DRIVER_SOCKET_IFACE    := "DIR=/data/misc/wifi/wpa_supplicant GROUP=wifi"
+
+include device/panasonic/p01d/qcom_utils.mk
