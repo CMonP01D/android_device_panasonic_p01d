@@ -1,6 +1,7 @@
 PRODUCT_COPY_FILES += \
   device/panasonic/p01d/vold.fstab:system/etc/vold.fstab \
   device/panasonic/p01d/root/init.qcom.rc:root/init.qcom.rc \
+  device/panasonic/p01d/root/initlogo.rle:root/initlogo.rle \
   device/panasonic/p01d/ueventd.qcom.rc:root/ueventd.qcom.rc \
   device/panasonic/p01d/system/init.touchpanel.sh:system/etc/init.touchpanel.sh \
   device/panasonic/p01d/system/init.qcom.sdio.sh:system/etc/init.qcom.sdio.sh \
