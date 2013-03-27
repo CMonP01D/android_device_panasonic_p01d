@@ -14,4 +14,6 @@ for FILE in `cat proprietary-files.txt | grep -v ^# | grep -v ^$`; do
     adb pull /system/$FILE $BASE/$FILE
 done
 
+find $BASE/bin -type f | xargs chmod +x
+
 ./setup-makefiles.sh
