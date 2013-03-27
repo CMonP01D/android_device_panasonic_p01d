@@ -10,7 +10,7 @@
 extract Qualcomm Adreno driver[1] into vendor/qcom/adreno200/proprietary/.
 
     $ pushd device/panasonic/p01d
-    $ ./extract-files.sh && ./setup-makefiles.sh
+    $ ./extract-files.sh
     $ popd
     $ ./build.sh
 
