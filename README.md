@@ -4,6 +4,7 @@
 
     $ git clone git://github.com/mozilla-b2g/B2G.git
     $ cd B2G
+    $ hg clone http://hg.mozilla.org/l10n-central/ja gecko-l10n/ja
     $ wget https://raw.github.com/hiikezoe/android_device_panasonic_p01d/b2g/p01d.xml
     $ ./config.sh p01d p01d.xml
 
