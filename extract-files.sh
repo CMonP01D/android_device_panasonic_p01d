@@ -16,4 +16,5 @@ done
 
 find $BASE/bin -type f | xargs chmod +x
 
+./setup-gaia-configs.sh
 ./setup-makefiles.sh
