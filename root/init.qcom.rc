@@ -19,6 +19,16 @@ on post-fs-data
     mkdir /data/system 0775 system system
     symlink /data/misc/wifi/wpa_supplicant /data/system/wpa_supplicant
 
+    mkdir /data/simcom       0775 radio system
+
+    mkdir /data/simcom/cm3623_ps        0775 radio system
+    chmod 775 /data/simcom/cm3623_ps
+
+    chown system system /sys/class/misc/cm3623_ps/ps_control
+    chown system system /sys/class/misc/cm3623_ps/ps_wake
+    chown system system /sys/class/misc/cm3623_ps/ps_trigger
+    chmod 666 /sys/class/misc/cm3623_ps/ps_trigger
+
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
 

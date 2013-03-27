@@ -1,5 +1,7 @@
 /dev/dtvtuner             0660   secureav   system
 /dev/genlock              0666   system     graphics
+/dev/cm3623_ps            0666   system     system
+/dev/cm3623_als           0666   system     system
 
 # gpu driver for adreno200 is globally accessible
 /dev/kgsl-3d0             0666   root       root
