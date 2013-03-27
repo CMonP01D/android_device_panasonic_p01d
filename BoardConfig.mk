@@ -61,4 +61,4 @@ WIFI_DRIVER_FW_PATH_STA     := "/etc/firmware/wlan/sdio.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/etc/firmware/wlan/sdio_apsta.bin"
 WIFI_DRIVER_SOCKET_IFACE    := "DIR=/data/misc/wifi/wpa_supplicant GROUP=wifi"
 
-include device/panasonic/p01d/qcom_utils.mk
+include build/core/utils.mk
