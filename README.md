@@ -18,4 +18,4 @@ extract Qualcomm Adreno driver[1] into vendor/qcom/adreno200/proprietary/.
 ## Install
     $ ./flash.sh (*1)
 
-(*) Need https://github.com/hiikezoe/B2G/commit/1dc08277170e7c1aadd2105c9143dc384d82f1a2
+(*1) Need https://github.com/hiikezoe/B2G/commit/1dc08277170e7c1aadd2105c9143dc384d82f1a2
