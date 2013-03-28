@@ -18,6 +18,7 @@ lib/libril.so
 lib/libril-qcril-hook-oem.so
 lib/libril-qc-qmi-1.so
 
+etc/BCM4330.hcd
 etc/firmware/wlan/nvram.txt
 etc/firmware/wlan/qcom_cfg.ini
 etc/firmware/wlan/sdio_apsta.bin
