@@ -24,6 +24,9 @@ on post-fs-data
     mkdir /data/simcom/cm3623_ps        0775 radio system
     chmod 775 /data/simcom/cm3623_ps
 
+    mkdir /data/simcom/btadd        0775 radio system
+    chmod 775 /data/simcom/btadd
+
     chown system system /sys/class/misc/cm3623_ps/ps_control
     chown system system /sys/class/misc/cm3623_ps/ps_wake
     chown system system /sys/class/misc/cm3623_ps/ps_trigger
@@ -52,5 +55,15 @@ service dhcpcd_wlan0 /system/bin/dhcpcd -ADBKL
 
 service iprenew_wlan0 /system/bin/dhcpcd -n
     class late_start
+    disabled
+    oneshot
+
+service hciattach /system/bin/brcm_patchram_plus_p01d   \
+  --baudrate 3000000 --tosleep 50000 --enable_hci       \
+  --no2bytes --enable_lpm --scopcm 0,4,0,0,0,0,0,0,0,0  \
+  --patchram /etc/BCM4330.hcd /dev/ttyHS0
+    class main
+    user bluetooth
+    group bluetooth net_bt_admin
     disabled
     oneshot

@@ -17,5 +17,8 @@ PRODUCT_PACKAGES += \
   liboverlay \
   libstagefrighthw
 
+PRODUCT_PACKAGES += \
+  brcm_patchram_plus_p01d
+
 $(call inherit-product, vendor/qcom/adreno200/device-adreno200.mk)
 $(call inherit-product-if-exists, vendor/panasonic/p01d/p01d-vendor.mk)
