@@ -14,6 +14,7 @@ extract Qualcomm Adreno driver[1] into vendor/qcom/adreno200/proprietary/.
 
 
 [1] https://developer.qualcomm.com/download/adreno200-aulinuxandroidicschococs04000306001.zip
+
 (*1) Needs https://github.com/hiikezoe/B2G/commit/1a6103a459bc9ca6b4a26a927776b36fe0e188d0
 
 ## Install
