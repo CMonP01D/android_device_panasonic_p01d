@@ -1,0 +1,4 @@
+flash_p01d()
+{
+	flash_fastboot nounlock "$@"
+}
