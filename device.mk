@@ -1,5 +1,5 @@
 PRODUCT_COPY_FILES += \
-  device/panasonic/p01d/vold.fstab:system/etc/vold.fstab \
+  device/panasonic/p01d/system/vold.fstab:system/etc/vold.fstab \
   device/panasonic/p01d/root/init.qcom.rc:root/init.qcom.rc \
   device/panasonic/p01d/root/initlogo.rle:root/initlogo.rle \
   device/panasonic/p01d/root/ueventd.qcom.rc:root/ueventd.qcom.rc \
