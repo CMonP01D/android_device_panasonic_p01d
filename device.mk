@@ -6,7 +6,8 @@ PRODUCT_COPY_FILES += \
   device/panasonic/p01d/system/init.qcom.sdio.sh:system/etc/init.qcom.sdio.sh \
   device/panasonic/p01d/system/vold.fstab:system/etc/vold.fstab \
   device/panasonic/p01d/system/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-  device/panasonic/p01d/system/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc
+  device/panasonic/p01d/system/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc \
+  device/panasonic/p01d/system/bootanimation.zip:system/media/bootanimation.zip
 
 PRODUCT_PACKAGES += \
   copybit.msm7x30 \
