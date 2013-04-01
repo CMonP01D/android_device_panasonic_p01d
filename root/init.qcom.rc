@@ -67,3 +67,8 @@ service hciattach /system/bin/brcm_patchram_plus_p01d   \
     group bluetooth net_bt_admin
     disabled
     oneshot
+
+service qmuxd /system/bin/qmuxd
+    class main
+    user radio
+    group radio

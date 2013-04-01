@@ -1,4 +1,5 @@
 bin/rild
+bin/qmuxd
 
 lib/libdiag.so
 lib/libdsi_netctrl.so
