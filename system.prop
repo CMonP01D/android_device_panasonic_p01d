@@ -5,7 +5,6 @@ ro.secure=0
 rild.libpath=/system/lib/libril-qc-qmi-1.so
 rild.libargs=-d /dev/smd0
 ro.sf.lcd_density=240
-ro.telephony.ril.v3=datacall,singlepdp
 ro.bt.bdaddr_path=/data/simcom/btadd/bt_add.file
 ro.opengles.version=131072
 hwui.render_dirty_regions=false
