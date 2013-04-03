@@ -11,3 +11,4 @@ hwui.render_dirty_regions=false
 com.qc.hdmi_out=false
 ro.ril.ecclist=110,118,119
 debug.sf.hw=1
+ro.moz.ril.v5_legacy=false
