@@ -63,4 +63,5 @@ WIFI_DRIVER_FW_PATH_STA     := "/etc/firmware/wlan/sdio.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/etc/firmware/wlan/sdio_apsta.bin"
 WIFI_DRIVER_SOCKET_IFACE    := "DIR=/data/misc/wifi/wpa_supplicant GROUP=wifi"
 
+COMMON_GLOBAL_CFLAGS += -Idevice/panasonice/p01d/include
 include build/core/utils.mk
