@@ -10,10 +10,10 @@ PRODUCT_COPY_FILES += \
   device/panasonic/p01d/system/bootanimation.zip:system/media/bootanimation.zip
 
 PRODUCT_PACKAGES += \
-  copybit.msm7x30 \
-  gralloc.msm7x30 \
-  hwcomposer.msm7x30 \
-  lights.msm7x30 \
+  copybit.msm7630_surf \
+  gralloc.msm7630_surf \
+  hwcomposer.msm7630_surf \
+  lights.msm7630_surf \
   libgenlock \
   liboverlay \
   libstagefrighthw

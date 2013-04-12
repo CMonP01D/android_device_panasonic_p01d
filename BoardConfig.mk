@@ -2,7 +2,7 @@
 -include vendor/panasonic/p01d/BoardConfigVendor.mk
 
 TARGET_NO_BOOTLOADER := true
-TARGET_BOARD_PLATFORM := msm7x30
+TARGET_BOARD_PLATFORM := msm7630_surf
 QCOM_BOARD_PLATFORMS := $(TARGET_BOARD_PLATFORM)
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
