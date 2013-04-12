@@ -10,10 +10,14 @@ PRODUCT_COPY_FILES += \
   device/panasonic/p01d/system/bootanimation.zip:system/media/bootanimation.zip
 
 PRODUCT_PACKAGES += \
+  audio_policy.msm7630_surf \
+  audio.primary.msm7630_surf \
   copybit.msm7630_surf \
   gralloc.msm7630_surf \
   hwcomposer.msm7630_surf \
   lights.msm7630_surf \
+  libaudioalsa \
+  libaudioutils \
   libgenlock \
   liboverlay \
   libstagefrighthw
