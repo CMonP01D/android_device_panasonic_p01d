@@ -32,6 +32,19 @@ on post-fs-data
     chown system system /sys/class/misc/cm3623_ps/ps_trigger
     chmod 666 /sys/class/misc/cm3623_ps/ps_trigger
 
+    chown system system /sys/class/leds/flash/brightness
+    chown system system /sys/class/leds/red/max_brightness
+    chown system system /sys/class/leds/red/led_blink_on
+    chown system system /sys/class/leds/red/led_blink_off
+    chown system system /sys/class/leds/green/max_brightness
+    chown system system /sys/class/leds/green/led_blink_on
+    chown system system /sys/class/leds/green/led_blink_off
+    chown system system /sys/class/leds/blue/max_brightness
+    chown system system /sys/class/leds/blue/led_blink_on
+    chown system system /sys/class/leds/blue/led_blink_off
+
+    chmod 666 /sys/class/leds/flash/brightness
+
     mkdir /data/misc/sensors 0777 system system
 
 service memsicd /system/bin/memsicd
