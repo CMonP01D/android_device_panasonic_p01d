@@ -22,6 +22,12 @@ lib/libril-qc-qmi-1.so
 
 lib/libaudcal.so
 
+lib/libcamera.so
+lib/libgemini.so
+lib/libmmipl.so
+lib/libmmjpeg.so
+lib/liboemcamera.so
+
 etc/BCM4330.hcd
 etc/firmware/vidc_720p_h264_enc_mc.fw
 etc/firmware/vidc_720p_mp4_dec_mc.fw
