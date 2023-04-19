@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <project name="CMonP01D/android_device_panasonic_p01d" path="device/panasonic/p01d" remote="github" revision="jellybean" />
+  <project name="CMonP01D/android_kernel_panasonic_p01d" path="kernel/panasonic/p01d" remote="github" revision="jellybean" />
+</manifest>
