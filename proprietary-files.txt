@@ -44,8 +44,6 @@ etc/firmware/vidc_720p_h263_dec_mc.fw
 etc/firmware/vidc_720p_h264_dec_mc.fw
 etc/firmware/vidc_720p_command_control.fw
 etc/firmware/vidc_720p_vc1_dec_mc.fw
-etc/firmware/yamato_pfp.fw
-etc/firmware/yamato_pm4.fw
 etc/firmware/wlan/sdio_apsta.bin
 etc/firmware/wlan/nvram.txt
 etc/firmware/wlan/qcom_cfg.ini
@@ -54,14 +52,3 @@ etc/firmware/wlan/sdio_cit.bin
 
 usr/keylayout/7k_handset.kl
 usr/keylayout/headset_keypad.kl
-
-lib/libC2D2.so
-lib/libOpenVG.so
-lib/libgsl.so
-lib/egl/egl.cfg
-lib/egl/eglsubAndroid.so
-lib/egl/libGLESv1_CM_adreno200.so
-lib/egl/libq3dtools_adreno200.so
-lib/egl/libEGL_adreno200.so
-lib/egl/libGLES_android.so
-lib/egl/libGLESv2_adreno200.so
