@@ -1,4 +1,4 @@
-# CyanogenMod 11 for P-01d
+# CyanogenMod 11 for P-01D
 ## Working
 *  Boot
 *  Display
