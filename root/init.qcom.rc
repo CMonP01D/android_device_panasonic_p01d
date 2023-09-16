@@ -171,7 +171,9 @@ on boot
     chmod 777 /data/mobilecolor
 
 on fs
-    mount yaffs2 mtd@persist /persist nosuid nodev
+    # Mount /system rw first to give the filesystem a chance to save a checkpoint
+    mount_all /fstab.qcom
+    swapon_all /fstab.qcom
 
 on emmc-fs
 # mount mmc partitions
