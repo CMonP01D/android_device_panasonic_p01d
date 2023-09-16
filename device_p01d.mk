@@ -9,6 +9,10 @@ $(call inherit-product-if-exists, vendor/panasonic/p01d/p01d-vendor.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/panasonic/p01d/overlay
 
+# fstab
+PRODUCT_COPY_FILES += \
+        device/panasonic/p01d/root/fstab.qcom:root/fstab.qcom
+
 # Init files in initramfs
 PRODUCT_COPY_FILES += \
         device/panasonic/p01d/root/init.qcom.rc:root/init.qcom.rc \
