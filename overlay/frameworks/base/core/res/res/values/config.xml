@@ -46,6 +46,7 @@
 
     <!-- Flag indicating whether we should enable automatic brightness for
          the button and keyboard backlights. -->
+    <add-resource type="bool" name="config_autoBrightnessButtonKeyboard"></add-resource>
     <bool name="config_autoBrightnessButtonKeyboard">false</bool>
 
     <!-- Array of output values for button backlight corresponding to the LUX values
