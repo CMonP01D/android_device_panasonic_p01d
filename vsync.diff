@@ -1,0 +1,46 @@
+diff --git a/frameworks/native/services/surfaceflinger/EventThread.cpp b/frameworks/native/services/surfaceflinger/EventThread.cpp
+index a9bb2ba0e..6dca9a62b 100644
+--- a/frameworks/native/services/surfaceflinger/EventThread.cpp
++++ b/frameworks/native/services/surfaceflinger/EventThread.cpp
+@@ -39,5 +39,5 @@ static void vsyncOffCallback(union sigval val) {
+ EventThread::EventThread(const sp<VSyncSource>& src)
+     : mVSyncSource(src),
+-      mUseSoftwareVSync(false),
++      mUseSoftwareVSync(true),
+       mVsyncEnabled(false),
+       mDebugVsyncEnabled(false) {
+@@ -94,21 +94,25 @@ void EventThread::requestNextVsync(
+ }
+ 
+ void EventThread::onScreenReleased() {
++#if 0
+     Mutex::Autolock _l(mLock);
+     if (!mUseSoftwareVSync) {
+         // disable reliance on h/w vsync
+         mUseSoftwareVSync = true;
+         mCondition.broadcast();
+     }
++#endif
+ }
+ 
+ void EventThread::onScreenAcquired() {
++#if 0
+     Mutex::Autolock _l(mLock);
+     if (mUseSoftwareVSync) {
+         // resume use of h/w vsync
+         mUseSoftwareVSync = false;
+         mCondition.broadcast();
+     }
++#endif
+ }
+ 
+ void EventThread::onVSyncEvent(nsecs_t timestamp) {
+@@ -274,7 +278,7 @@ Vector< sp<EventThread::Connection> > EventThread::waitForEvent(
+                 // We don't want to stall if there's a driver bug, so we
+                 // use a (long) timeout when waiting for h/w vsync, and
+                 // generate fake events when necessary.
+-                bool softwareSync = mUseSoftwareVSync;
++                bool softwareSync = true; // mUseSoftwareVSync;
+                 nsecs_t timeout = softwareSync ? ms2ns(16) : ms2ns(1000);
+                 if (mCondition.waitRelative(mLock, timeout) == TIMED_OUT) {
+                     if (!softwareSync) {
