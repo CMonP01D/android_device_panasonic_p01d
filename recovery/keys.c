@@ -44,12 +44,6 @@ int device_handle_key(int key_code, int visible) {
             case KEY_END:
             case KEY_BACKSPACE:
             case KEY_SEARCH:
-                if (ui_get_showing_back_button()) {
-                    return SELECT_ITEM;
-                }
-                if (!get_allow_toggle_display() && !ui_root_menu) {
-                    return GO_BACK;
-                }
             case KEY_BACK:
                 if (!ui_root_menu) {
                     return GO_BACK;
