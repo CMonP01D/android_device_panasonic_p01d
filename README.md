@@ -12,4 +12,8 @@
 *  Audio
 *  Most others...
 
- Thanks! [@hiikezoe](https://github.com/hiikezoe)
+## Force Software VSYNC Patch(Fix slow rendering)
+	cd /yourbuilddir/
+	patch -p1 < '/yourbuilddir/device/panasonic/p01d/vsync.diff'
+
+Thanks! [@hiikezoe](https://github.com/hiikezoe)
