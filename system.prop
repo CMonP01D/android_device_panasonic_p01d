@@ -4,7 +4,7 @@
 ro.secure=0
 rild.libpath=/system/lib/libril-qc-qmi-1.so
 rild.libargs=-d /dev/smd0
-ro.telephony.ril_class=PanasonicQualcommRIL
+ro.telephony.ril_class=QualcommSharedRIL
 ro.sf.lcd_density=240
 ro.config.libemoji=libemoji_docomo.so
 ro.telephony.ril.v3=datacall,singlepdp
