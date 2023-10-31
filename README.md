@@ -6,14 +6,27 @@
 *  TouchScreen
 *  FrontLED
 *  Flashlight
-## Not Working
 *  Wi-Fi
-*  RIL
+*  IMEI
+## Not Working
 *  Audio
+*  Bluetooth
+*  AOSP Webview
+*  Camera
+*  Felica
+*  OneSeg DTV
+*  SELinux
+## Unchecked
+*  3G
+*  GApps
 *  Most others...
 
 ## Force Software VSYNC Patch(Fix slow rendering)
 	cd /yourbuilddir/
 	patch -p1 < '/yourbuilddir/device/panasonic/p01d/vsync.diff'
+	
+## WLAN Build Fix Patch
+	cd /yourbuilddir/
+	patch -p1 < '/yourbuilddir/device/panasonic/p01d/wlan.diff'
 
 Thanks! [@hiikezoe](https://github.com/hiikezoe)
