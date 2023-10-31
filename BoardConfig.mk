@@ -69,26 +69,14 @@ COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT
 BOARD_NEEDS_MEMORYHEAPPMEM := true
 BOARD_USES_LEGACY_OVERLAY := true
 
-WIFI_BAND := 802_11_BGN
-WPA_SUPPLICANT_VERSION      := VER_0_8_X_TI
+WPA_SUPPLICANT_VERSION      := VER_0_8_X
 BOARD_WLAN_DEVICE           := bcm4330
-BOARD_WPA_SUPPLICANT_DRIVER := NL80211
-BOARD_HOSTAPD_DRIVER        := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
+BOARD_WPA_SUPPLICANT_DRIVER := WEXT
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
 WIFI_DRIVER_MODULE_NAME     := "bcm4330"
 WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcm4330.ko"
 WIFI_DRIVER_MODULE_ARG      := "firmware_path=/etc/firmware/wlan/sdio_cit.bin nvram_path=/etc/firmware/wlan/nvram.txt"
 WIFI_DRIVER_FW_PATH_STA     := "/etc/firmware/wlan/sdio.bin"
-
-#WPA_SUPPLICANT_VERSION      := VER_0_8_X
-#BOARD_WLAN_DEVICE           := bcm4330
-#BOARD_WPA_SUPPLICANT_DRIVER := WEXT
-#BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
-#WIFI_DRIVER_MODULE_NAME     := "bcm4330"
-#WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcm4330.ko"
-#WIFI_DRIVER_MODULE_ARG      := "firmware_path=/etc/firmware/wlan/sdio_cit.bin nvram_path=/etc/firmware/wlan/nvram.txt"
-#WIFI_DRIVER_FW_PATH_STA     := "/etc/firmware/wlan/sdio.bin"
-#WIFI_DRIVER_FW_PATH_AP      := "/etc/firmware/wlan/sdio_apsta.bin"
+WIFI_DRIVER_FW_PATH_AP      := "/etc/firmware/wlan/sdio_apsta.bin"
 
 TARGET_SPECIFIC_HEADER_PATH := device/panasonic/p01d/include
