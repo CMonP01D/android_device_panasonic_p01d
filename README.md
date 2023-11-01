@@ -8,6 +8,8 @@
 *  Flashlight
 *  Wi-Fi
 *  IMEI
+## Working(incomplete)
+*  GApps
 ## Not Working
 *  Audio
 *  Bluetooth
@@ -18,7 +20,6 @@
 *  SELinux
 ## Unchecked
 *  3G
-*  GApps
 *  Most others...
 
 ## Force Software VSYNC Patch(Fix slow rendering)
