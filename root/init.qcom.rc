@@ -26,11 +26,13 @@
 #
 
 on init
-    export EXTERNAL_STORAGE /mnt/sdcard
+    mkdir /mnt/media_rw/sdcard 0755 media_rw media_rw
+    mkdir /storage/sdcard 0700 root root
 
-    mkdir /mnt 0775 root system
-    mkdir /mnt/sdcard 0000 system system
-    symlink /mnt/sdcard /sdcard
+    export EXTERNAL_STORAGE /storage/sdcard
+
+    symlink /storage/sdcard /sdcard
+    symlink /storage/sdcard /mnt/sdcard
 
     mkdir /persist 0771 system system
     mkdir /log 0771 system system
@@ -289,6 +291,11 @@ service iprenew_bnep0 /system/bin/dhcpcd -n
     class main
     disabled
     oneshot
+
+# sdcard daemon
+service fuse_sdcard /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard /storage/sdcard
+    class late_start
+    disabled
 
 on property:crypto.driver.load=1
      insmod /system/lib/modules/qce.ko

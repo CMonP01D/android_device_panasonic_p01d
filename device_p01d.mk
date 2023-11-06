@@ -27,8 +27,7 @@ PRODUCT_COPY_FILES += \
         device/panasonic/p01d/system/init.touchpanel.sh:system/etc/init.touchpanel.sh \
         device/panasonic/p01d/system/surf_keypad.kl:system/usr/keylayout/surf_keypad.kl \
         device/panasonic/p01d/system/media_codecs.xml:system/etc/media_codecs.xml \
-        device/panasonic/p01d/system/media_profiles.xml:system/etc/media_profiles.xml \
-        device/panasonic/p01d/vold.fstab:system/etc/vold.fstab
+        device/panasonic/p01d/system/media_profiles.xml:system/etc/media_profiles.xml
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \

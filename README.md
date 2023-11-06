@@ -8,6 +8,7 @@
 *  Flashlight
 *  Wi-Fi
 *  IMEI
+*  SD Card
 ## Working(incomplete)
 *  GApps
 ## Not Working

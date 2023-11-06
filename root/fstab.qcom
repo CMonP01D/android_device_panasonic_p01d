@@ -11,7 +11,7 @@
 /dev/block/mtdblock6    		      /recovery      mtd       defaults                  defaults
 
 # Vold managed devices
-/devices/platform/msm_sdcc.4/mmc_host/mmc1    auto           auto      defaults                  voldmanaged=sdcard0:auto,noemulatedsd
+/devices/platform/msm_sdcc.4/mmc_host/mmc2    auto           auto      defaults                  voldmanaged=sdcard:auto,noemulatedsd
 
 # zRAM
 /dev/block/zram0                              none           swap      defaults                  zramsize=134217728
