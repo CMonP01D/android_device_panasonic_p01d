@@ -7,10 +7,11 @@
 *  FrontLED
 *  Flashlight
 *  Wi-Fi
-*  IMEI
 *  SD Card
 ## Working(incomplete)
 *  GApps
+*  IMEI
+*  Serial Number(Android ID)
 ## Not Working
 *  Audio
 *  Bluetooth
