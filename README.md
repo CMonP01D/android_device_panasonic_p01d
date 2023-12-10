@@ -8,6 +8,8 @@
 *  Flashlight
 *  Wi-Fi
 *  SD Card
+*  IMEI
+*  Serial Number(Android ID)
 ## Not Working
 *  Audio
 *  Bluetooth
@@ -17,8 +19,6 @@
 *  OneSeg DTV
 *  SELinux
 *  GApps
-*  IMEI
-*  Serial Number(Android ID)
 ## Unchecked
 *  3G
 *  Most others...
