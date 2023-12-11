@@ -10,8 +10,8 @@
 *  SD Card
 *  IMEI
 *  Serial Number(Android ID)
-## Not Working
 *  Audio
+## Not Working
 *  Bluetooth
 *  AOSP Webview
 *  Camera

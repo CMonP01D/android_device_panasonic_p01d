@@ -45,6 +45,7 @@ USE_OPENGL_RENDERER := true
 BOARD_EGL_CFG := device/panasonic/p01d/egl.cfg
 
 # for QCOM
+TARGET_QCOM_AUDIO_VARIANT := legacy
 TARGET_QCOM_DISPLAY_VARIANT := legacy
 TARGET_QCOM_MEDIA_VARIANT := legacy
 
