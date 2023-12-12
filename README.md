@@ -19,6 +19,7 @@
 *  OneSeg DTV
 *  SELinux
 *  GApps
+*  Earphone output
 ## Unchecked
 *  3G
 *  Most others...
